@@ -15,9 +15,9 @@ class DataBase:
 
         # Инициализация базы, если не найдена
         if need_init:
-            self.create_db()
+            self._create_db()
 
-    def create_db(self) -> None:
+    def _create_db(self) -> None:
         with open("database/schema.sql", "r", encoding="utf-8") as file:
             self.cursor.executescript(file.read())
             self.connection.commit()
@@ -25,3 +25,29 @@ class DataBase:
     def have_users(self) -> bool:
         self.cursor.execute("SELECT EXISTS(SELECT 1 FROM Пользователи LIMIT 1)")
         return bool(self.cursor.fetchone()[0])
+
+    def login(self, login: str, password: str):
+        self.cursor.execute(
+            """
+            SELECT ID, Логин, Права_администратора
+            FROM Пользователи
+            WHERE Логин = ? AND Пароль = ?
+            LIMIT 1
+            """,
+            (login, password)
+        )
+        return self.cursor.fetchone()
+
+
+    def sign_up(self, login: str, password: str, is_admin=False):
+        self.cursor.execute(
+            """
+            INSERT INTO Пользователи
+            (Логин, Пароль, Права_администратора)
+            VALUES (?, ?, ?)
+            """,
+            (login, password, is_admin)
+        )
+        self.connection.commit()
+
+        return self.login(login, password)

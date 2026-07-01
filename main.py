@@ -2,16 +2,16 @@ from database import DataBase
 from gui import App, AuthorizationWindow, RegistrationWindow
 
 
-def main():
+def main() -> None:
     db = DataBase()
 
     if db.have_users():
-        auth = AuthorizationWindow()
+        auth = AuthorizationWindow(db)
     else:
-        auth = RegistrationWindow()
+        auth = RegistrationWindow(db, is_admin=True)
     auth.mainloop()
 
-    if auth.user is None:
+    if not auth.user:
         return
 
     app = App(db, auth.user)

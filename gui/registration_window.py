@@ -2,12 +2,14 @@ import customtkinter as ctk
 
 
 class RegistrationWindow(ctk.CTk):
-    def __init__(self):
+    def __init__(self, database, is_admin=False):
         # window init
         super().__init__()
         self.geometry("400x150")
         self.resizable(False, False)
         self.title("ИСРХ")
+        self.database = database
+        self.is_admin = is_admin
         self.user = None
         # label init
         self.label = ctk.CTkLabel(self, text="Информационная система рыболовного хозяйства", font=("Comic Sans MS", 14))
@@ -22,4 +24,11 @@ class RegistrationWindow(ctk.CTk):
         self.button.pack(padx=0, pady=10)
 
     def button_callback(self):
-        return self.user
+        login = self.login_entry.get()
+        password = self.password_entry.get()
+        user = self.database.sign_up(login, password, is_admin=self.is_admin)
+        if user is None:
+            pass
+        else:
+            self.user = user
+            self.destroy()
