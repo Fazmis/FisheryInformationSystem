@@ -1,10 +1,10 @@
 from database import DataBase
-from gui import App
+from gui import App, AuthorizationWindow
 
 
 def main():
     db = DataBase()
-    app = App()
+    app = AuthorizationWindow()
     app.mainloop()
 
 if __name__ == '__main__':
