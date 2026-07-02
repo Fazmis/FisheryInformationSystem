@@ -39,14 +39,14 @@ class DataBase:
         return self.cursor.fetchone()
 
 
-    def sign_up(self, login: str, password: str, is_admin=False):
+    def sign_up(self, login: str, password: str, grant_admin_rights=False):
         self.cursor.execute(
             """
             INSERT INTO Пользователи
             (Логин, Пароль, Права_администратора)
             VALUES (?, ?, ?)
             """,
-            (login, password, is_admin)
+            (login, password, grant_admin_rights)
         )
         self.connection.commit()
 

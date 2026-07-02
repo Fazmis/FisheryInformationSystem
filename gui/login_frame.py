@@ -1,18 +1,13 @@
 import customtkinter as ctk
 
 
-class AuthorizationWindow(ctk.CTk):
-    def __init__(self, database):
-        # window init
-        super().__init__()
-        self.geometry("400x190")
-        self.resizable(False, False)
-        self.title("ИСРХ")
-        self.database = database
-        self.user = None
+class LoginFrame(ctk.CTkFrame):
+    def __init__(self, master):
+        super().__init__(master)
+        self.app = master
         # label init
         self.label = ctk.CTkLabel(self, text="Информационная система рыболовного хозяйства", font=("Comic Sans MS", 14))
-        self.label.pack(padx=0, pady=10)
+        self.label.pack(padx=10, pady=10)
         # entry init
         self.login_entry = ctk.CTkEntry(self, placeholder_text="Логин")
         self.login_entry.pack(padx=0, pady=0)
@@ -28,10 +23,11 @@ class AuthorizationWindow(ctk.CTk):
     def button_callback(self):
         login = self.login_entry.get()
         password = self.password_entry.get()
-        user = self.database.login(login, password)
+        user = self.app.database.login(login, password)
         if user is None:
             self.error_label.configure(text="Неверно указан логин или пароль")
         else:
-            self.user = user
-            self.destroy()
+            user_id, user_login, user_is_admin = user
+            self.app.is_admin = user_is_admin
+            self.app.show_main()
 

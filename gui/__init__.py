@@ -1,9 +1,11 @@
 from .app import App
-from .authorization_window import AuthorizationWindow
-from .registration_window import RegistrationWindow
+from .main_frame import MainFrame
+from .login_frame import LoginFrame
+from .registration_frame import RegistrationFrame
 
 __all__ = [
     "App",
-    "AuthorizationWindow",
-    "RegistrationWindow",
+    "MainFrame",
+    "LoginFrame",
+    "RegistrationFrame",
 ]
