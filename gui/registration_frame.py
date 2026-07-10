@@ -21,5 +21,5 @@ class RegistrationFrame(ctk.CTkFrame):
     def button_callback(self):
         login = self.login_entry.get()
         password = self.password_entry.get()
-        self.app.database.sign_up(login, password, grant_admin_rights=self.grant_admin_rights)
+        self.app.user = self.app.database.sign_up(login, password, grant_admin_rights=self.grant_admin_rights)
         self.app.show_main()

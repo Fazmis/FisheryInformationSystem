@@ -1,5 +1,5 @@
 import customtkinter as ctk
-from .main_frame import MainFrame
+from gui.main_frame.main_frame import MainFrame
 from .login_frame import LoginFrame
 from .registration_frame import RegistrationFrame
 
@@ -10,12 +10,10 @@ class App(ctk.CTk):
         self.resizable(False, False)
         self.title("ИСРХ")
         self.database = database
-        self.is_admin = None
-
+        self.user = None
         if self.database.have_users():
             self.show_login()
         else:
-            self.is_admin = True
             self.show_registration(grant_admin_rights=True)
 
     def show_login(self):
@@ -32,7 +30,6 @@ class App(ctk.CTk):
 
     def show_main(self):
             self.clear()
-
             self.current = MainFrame(self)
             self.current.pack(fill="both", expand=True)
 

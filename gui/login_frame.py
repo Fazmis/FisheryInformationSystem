@@ -27,7 +27,6 @@ class LoginFrame(ctk.CTkFrame):
         if user is None:
             self.error_label.configure(text="Неверно указан логин или пароль")
         else:
-            user_id, user_login, user_is_admin = user
-            self.app.is_admin = user_is_admin
+            self.app.user = user
             self.app.show_main()
 
